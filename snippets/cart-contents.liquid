@@ -1,0 +1,27 @@
+{% if cart.item_count > 0 %}
+  <form action="/cart" method="post" novalidate>
+    <fieldset id="cart-field-set" class="js-cart-field-set">
+      <div class="cart-lines">
+        {% for item in cart.items %}
+          {% include 'line-item' %}
+        {% endfor %}
+      </div>
+
+      <div class="cart-totals">
+        <div class="subtotal-line">
+          <p>{{ 'cart.filled.subtotal' | t }}</p>
+          <span class="price">{{ cart.total_price | money }}</span>
+        </div>
+        <button type="submit" name="update"> {{ 'cart.filled.update' | t }} </button>
+        <button type="submit" name="checkout">{{ 'cart.filled.button' | t }}</button>
+      </div>
+  
+      <p class="js-cart-currency-note">
+        {{ 'cart.filled.currency_note_html' | t: currency: shop.currency }}
+      </p>
+    </fieldset>
+  </form>
+{% else %}
+  <p class="cart-empty-text ta-center">{{ 'cart.empty.title' | t }}</p>
+  <a href="/" class="button js-keep-shopping">{{ 'cart.empty.button' | t }}</a>
+{% endif %}

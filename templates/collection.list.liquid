@@ -1,0 +1,27 @@
+{% paginate collection.products by 9999 %}
+  {% if collection.image %}
+    <div id="collection-image">
+      <img src="{{ collection.image | image_url}}" alt="{{ collection.title }}">
+    </div>
+  {% endif %}
+  
+  <h1>{{ collection.title }}</h1>
+  <div class="collection-description">
+    {{ collection.description }}
+  </div>
+
+  <div class="collection-sorting">
+    <h4>
+      {{ 'collection.sort.title' | t }}
+    </h4>
+    {% for option in collection.sort_options %}
+      {% if option.value contains 'price-' %}
+        {{ option.name }}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% for product in collection.products %}
+    {% include 'product-card' %}
+  {% endfor %}
+{% endpaginate %}
